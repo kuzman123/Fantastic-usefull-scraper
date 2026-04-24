@@ -79,6 +79,8 @@ pip install faster-whisper "transformers>=4.49.0,<5.0" accelerate \
 # xformers (cu126 only — skip if using cu128)
 pip install xformers==0.0.30 --index-url https://download.pytorch.org/whl/cu126
 
+pip install yt-dlp
+
 # ffmpeg
 apt update && apt install -y ffmpeg
 ```
