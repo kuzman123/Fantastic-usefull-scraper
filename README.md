@@ -18,7 +18,7 @@ The pipeline runs across two systems:
 YouTube Download — Windows vs. Linux
 
 - **Stage 1 (video download) is intentionally designed to run on Windows. Cloud GPU providers assign IP addresses that YouTube frequently flags as automated traffic, resulting in bot-detection blocks (Sign in to confirm you're not a bot). Residential IPs on Windows machines are not subject to this restriction under normal usage.
-You can to Stage 1 on Linux Cloud GPU also. I've checked multiple times and it works, except once when I was blocked. All from the same YouTube account.
+You can do Stage 1 on Linux Cloud GPU also. I've checked multiple times and it works, except once when I was blocked. All from the same YouTube account.
 
 Both stages share the same `output/` folder structure with relative paths, making it fully portable across operating systems without any configuration changes.
 
