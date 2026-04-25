@@ -51,8 +51,6 @@ Both stages share the same `output/` folder structure with relative paths, makin
 
 > **Important:** xformers is only compatible with the cu126 build on Python 3.10. On cu128 + Python 3.10, xformers has no compatible wheel — set `USE_XFORMERS = False` in `config.py` and the pipeline falls back to SDPA automatically.
 
-> **Do NOT install bitsandbytes on Volta-architecture GPUs (V100)** — causes segfault on import.
-
 ### System dependency
 ```bash
 # Linux
@@ -66,13 +64,21 @@ apt update && apt install -y ffmpeg
 
 ## Installation
 
-### Windows (Stage 1 only)
+### Windows
 
 ```cmd
 git clone [fantastic-usefull-scraper](https://github.com/kuzman123/fantastic-usefull-scraper.git)
 cd fantastic-usefull-scraper
 python -m venv venv
 venv\Scripts\activate
+
+# PyTorch — install FIRST, before everything else
+pip install torch==2.7.1 torchvision==0.22.1 --index-url https://download.pytorch.org/whl/cu126
+
+# Core dependencies
+pip install faster-whisper "transformers>=4.49.0,<5.0" accelerate \
+    "qwen-vl-utils[decord]" opencv-python pillow huggingface_hub
+
 pip install yt-dlp pillow
 ```
 
@@ -131,7 +137,7 @@ cmdffmpeg -version
 Expected output starts with ffmpeg version 7.x.x .... If you see 'ffmpeg' is not recognized, restart the Command Prompt and try again.
 
 
-### Download models (Linux, once per environment)
+### Download models
 
 ```bash
 cd /workspace/fantastic-usefull-scraper
@@ -220,7 +226,7 @@ Each output `.md` contains:
 - Video metadata header (URL, uploader, duration, date)
 - Chapter or time-based sections
 - Timestamped transcription segments
-- `[IMAGE: ...]` blocks with AI-generated visual descriptions at scene-change moments
+- `[IMAGE: ...]` blocks with Qwen2.5-VL large vision-language model generated visual descriptions at scene-change moments, or intervals
 
 This format is well-suited for knowledge base ingestion, retrieval-augmented generation (RAG) pipelines, semantic search indexing, and structured documentation workflows.
 
